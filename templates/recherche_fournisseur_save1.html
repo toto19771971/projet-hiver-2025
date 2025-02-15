@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestion des Fournisseurs</title>
+  <link rel="stylesheet" href="/static/styles.css">
+  <style>
+    /* Styles complémentaires si besoin */
+    .buttons button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+    .buttons button:hover {
+      background-color: #0056b3;
+    }
+    .suggestions {
+      border: 1px solid #ccc;
+      background: white;
+      max-height: 150px;
+      overflow-y: auto;
+      position: absolute;
+      width: 250px;
+      z-index: 10;
+    }
+    .suggestions div {
+      padding: 5px;
+      cursor: pointer;
+    }
+    .suggestions div:hover {
+      background-color: #e9e9e9;
+    }
+    .mandatory::after {
+      content: " *";
+      color: red;
+    }
+    .form-group {
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <!-- Conteneur centré avec largeur limitée -->
+  <div class="container">
+    <h1>Gestion des Fournisseurs</h1>
+
+    <div class="buttons">
+      <button type="button" onclick="afficherRecherche()">Rechercher</button>
+      <button type="button" onclick="afficherRecherche()">Modifier</button>
+    </div>
+
+    <div id="zone-recherche" style="display: none; position: relative;">
+      <label for="search-input">🔍 Rechercher :</label>
+      <input type="text" id="search-input" placeholder="Tapez un nom ou un code...">
+      <div id="suggestions" class="suggestions"></div>
+    </div>
+
+    <form id="formulaire">
+      <!-- Les 19 champs du formulaire -->
+      <div class="form-group">
+        <label class="mandatory" for="code_fournisseur">Code fournisseur</label>
+        <input type="text" id="code_fournisseur" name="Code fournisseur" required>
+      </div>
+      <div class="form-group">
+        <label class="mandatory" for="nom_fournisseur">Nom du fournisseur</label>
+        <input type="text" id="nom_fournisseur" name="Nom du fournisseur" required>
+      </div>
+      <div class="form-group">
+        <label for="personne_responsable">Personne responsable</label>
+        <input type="text" id="personne_responsable" name="Personne responsable">
+      </div>
+      <div class="form-group">
+        <label for="adresse">Adresse</label>
+        <input type="text" id="adresse" name="Adresse">
+      </div>
+      <div class="form-group">
+        <label for="npa_ville">NPA/Ville</label>
+        <input type="text" id="npa_ville" name="NPA/Ville">
+      </div>
+      <div class="form-group">
+        <label class="mandatory" for="no_telephone_1">No téléphone 1</label>
+        <input type="text" id="no_telephone_1" name="No téléphone 1" required>
+      </div>
+      <div class="form-group">
+        <label for="no_telephone_2">No téléphone 2</label>
+        <input type="text" id="no_telephone_2" name="No téléphone 2">
+      </div>
+      <div class="form-group">
+        <label for="site_internet">Site internet</label>
+        <input type="text" id="site_internet" name="Site internet">
+      </div>
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="E-mail">
+      </div>
+      <!-- Menu déroulant pour Compte à créditer -->
+      <div class="form-group">
+        <label class="mandatory" for="compte_a_crediter">Compte à créditer</label>
+        <select id="compte_a_crediter" name="Compte à créditer" required>
+          <option value="">Sélectionner un compte</option>
+          {% for row in crediter_options %}
+            <option value="{{ row['Numéro de compte'] }} - {{ row['Libellé'] }} - {{ row['Catégorie'] }}">
+              {{ row['Numéro de compte'] }} - {{ row['Libellé'] }} - {{ row['Catégorie'] }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <!-- Menu déroulant pour Compte à débiter -->
+      <div class="form-group">
+        <label class="mandatory" for="compte_a_debiter">Compte à débiter</label>
+        <select id="compte_a_debiter" name="Compte à débiter" required>
+          <option value="">Sélectionner un compte</option>
+          {% for row in debiter_options %}
+            <option value="{{ row['Numéro de compte'] }} - {{ row['Libellé'] }} - {{ row['Catégorie'] }}">
+              {{ row['Numéro de compte'] }} - {{ row['Libellé'] }} - {{ row['Catégorie'] }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <!-- Menus TVA -->
+      <div class="form-group">
+        <label class="mandatory" for="taux_tva1">Taux TVA 1</label>
+        <select id="taux_tva1" name="Taux TVA 1" required>
+          <option value="">Sélectionner un taux</option>
+          {% for tva in tva_options %}
+            <!-- Si votre colonne dans bd_tva.xlsx s'appelle "Taux TVA", remplacez "tva['Taux']" par "tva['Taux TVA']" -->
+            <option value="{{ tva['Taux'] }}">{{ tva['Taux'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="taux_tva2">Taux TVA 2</label>
+        <select id="taux_tva2" name="Taux TVA 2">
+          <option value="">Sélectionner un taux</option>
+          {% for tva in tva_options %}
+            <option value="{{ tva['Taux'] }}">{{ tva['Taux'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <!-- Délai de paiement -->
+      <div class="form-group">
+        <label class="mandatory" for="delai_de_paiement">Délai de paiement</label>
+        <select id="delai_de_paiement" name="Délai de paiement" required>
+          <option value="">Sélectionner un délai</option>
+          {% for delai in delai_options %}
+            <option value="{{ delai['Délai'] }}">{{ delai['Délai'] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="nom_de_la_banque">Nom de la banque</label>
+        <input type="text" id="nom_de_la_banque" name="Nom de la banque">
+      </div>
+      <div class="form-group">
+        <label for="npa_ville_banque">NPA/Ville banque</label>
+        <input type="text" id="npa_ville_banque" name="NPA/Ville banque">
+      </div>
+      <div class="form-group">
+        <label for="no_de_compte">No de compte</label>
+        <input type="text" id="no_de_compte" name="No de compte">
+      </div>
+      <div class="form-group">
+        <label for="iban">IBAN</label>
+        <input type="text" id="iban" name="IBAN">
+      </div>
+      <div class="form-group">
+        <label for="commentaire">Commentaire</label>
+        <textarea id="commentaire" name="Commentaire"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="button" onclick="modifierFournisseur()">Modifier</button>
+      </div>
+    </form>
+
+    <script>
+      function afficherRecherche() {
+        document.getElementById("zone-recherche").style.display = "block";
+      }
+
+      // Autocomplétion
+      document.getElementById("search-input").addEventListener("input", function() {
+        let query = this.value;
+        fetch(`/autocomplete?query=${query}`)
+          .then(response => response.json())
+          .then(data => {
+            document.getElementById("suggestions").innerHTML = data.map(f =>
+              `<div onclick='remplirFormulaire(${JSON.stringify(f)})'>` +
+                f["Code fournisseur"] + " - " + f["Nom du fournisseur"] +
+              `</div>`
+            ).join("");
+          });
+      });
+
+      // Remplissage du formulaire
+      function remplirFormulaire(f) {
+        const mapping = {
+          "Code fournisseur": "code_fournisseur",
+          "Nom du fournisseur": "nom_fournisseur",
+          "Personne responsable": "personne_responsable",
+          "Adresse": "adresse",
+          "NPA/Ville": "npa_ville",
+          "No téléphone 1": "no_telephone_1",
+          "No téléphone 2": "no_telephone_2",
+          "Site internet": "site_internet",
+          "E-mail": "email",
+          "Compte à créditer": "compte_a_crediter",
+          "Compte à débiter": "compte_a_debiter",
+          "Taux TVA 1": "taux_tva1",
+          "Taux TVA 2": "taux_tva2",
+          "Délai de paiement": "delai_de_paiement",
+          "Nom de la banque": "nom_de_la_banque",
+          "NPA/Ville banque": "npa_ville_banque",
+          "No de compte": "no_de_compte",
+          "IBAN": "iban",
+          "Commentaire": "commentaire"
+        };
+        for (const [col, id] of Object.entries(mapping)) {
+          const field = document.getElementById(id);
+          if (field) {
+            field.value = f[col] || "";
+          }
+        }
+      }
+
+      // Modification
+      function modifierFournisseur() {
+        let formData = new FormData(document.getElementById("formulaire"));
+        fetch("/modifier", {
+          method: "POST",
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          alert(data.message);
+        })
+        .catch(error => {
+          alert("Erreur lors de la modification !");
+          console.error(error);
+        });
+      }
+    </script>
+  </div> <!-- Fin du container -->
+</body>
+</html>

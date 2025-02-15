@@ -1,0 +1,11 @@
+projet-bd-fournisseurs/
+│── app.py
+│── bd_fournisseurs_fictif.xlsx
+│── plan_comptable.xlsx
+│── bd_tva.xlsx
+│── bd_delai_de_paiement.xlsx
+│── requirements.txt
+│── templates/
+│   ├── recherche_fournisseurs.html
+│── static/
+│   ├── styles.css
