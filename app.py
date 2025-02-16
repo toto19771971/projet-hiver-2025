@@ -76,11 +76,14 @@ def creer_fournisseur():
                 return jsonify({"message": f"Champ obligatoire manquant: {field}"}), 400
         if not df_fournisseurs[df_fournisseurs["Code fournisseur"] == data.get("Code fournisseur")].empty:
             return jsonify({"message": "Fournisseur existe déjà !"}), 400
-        df_fournisseurs = df_fournisseurs.append(data, ignore_index=True)
+
+        new_row_df = pd.DataFrame([data])
+        df_fournisseurs = pd.concat([df_fournisseurs, new_row_df], ignore_index=True)
         df_fournisseurs.to_excel("bd_fournisseurs_fictif.xlsx", index=False)
         return jsonify({"message": "Fournisseur créé avec succès !"}), 200
     except Exception as e:
         return jsonify({"message": f"Erreur lors de la création du fournisseur: {str(e)}"}), 500
+
 
 @app.route("/supprimer", methods=["POST"])
 def supprimer_fournisseur():
