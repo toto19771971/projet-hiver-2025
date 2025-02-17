@@ -1,0 +1,44 @@
+flowchart TD
+    subgraph ENTREE [Entree: Facturation et Transactions]
+        E1[Facturation Clients]
+        E2[Facturation Fournisseurs]
+        E3[Paiements et Encaissements]
+    end
+    subgraph COMPTA [Module Comptabilite]
+        C1[Ventes]
+        C2[Achats]
+        C3[Salaires et Charges]
+        C4[Stocks et Mouvements]
+        C5[Grand Journal - Ecritures]
+    end
+    subgraph MIDDLEWARE [Middleware/API - Calcul et Analyse]
+        M[Analyse Temps Reel]
+    end
+    subgraph ALERTES [Module d'Alertes]
+        A1[Comparaison Seuils]
+        A2[Declenchement Alerte]
+    end
+    subgraph NOTIF [Notifications]
+        N[Envoi Notifications]
+    end
+    subgraph ADMIN [Administration]
+        AD1[Utilisateurs]
+        AD2[Parametrage Comptabilite - Specifique Suisse]
+    end
+    E1 --> C1
+    E2 --> C2
+    E3 --> C1
+    C1 --> C5
+    C2 --> C5
+    C3 --> C5
+    C4 --> C5
+    C5 --> M
+    M --> A1
+    A1 --> A2
+    A2 --> N
+    AD2 --- M
+    AD2 --- A2
+    ADMIN --- COMPTA
+    ADMIN --- MIDDLEWARE
+    ADMIN --- ALERTES
+    M --- N
