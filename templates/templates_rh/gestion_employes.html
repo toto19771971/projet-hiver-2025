@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestion des Employés</title>
+    <link rel="stylesheet" href="style_rh.css">
+    <style>
+        /* Styles internes pour la mise en page */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gestion des Employés</h1>
+    <div class="form-container">
+        <form>
+            <div class="form-group">
+                <label for="nom">Nom de l'employé</label>
+                <input type="text" id="nom" name="nom">
+            </div>
+            <div class="form-group">
+                <label for="poste">Poste</label>
+                <input type="text" id="poste" name="poste">
+            </div>
+            <div class="form-group">
+                <label for="departement">Département</label>
+                <select id="departement" name="departement">
+                    <option value="rh">Ressources Humaines</option>
+                    <option value="comptabilite">Comptabilité</option>
+                    <option value="it">Informatique</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date_embauche">Date d'embauche</label>
+                <input type="date" id="date_embauche" name="date_embauche">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="custom-button">Enregistrer</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

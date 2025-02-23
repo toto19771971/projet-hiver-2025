@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factures Fournisseurs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 600px;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .search-form {
+            display: grid;
+            gap: 15px;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .form-group input[type="date"] {
+            padding: 8px;
+        }
+
+        .form-group button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Recherche de Factures Fournisseurs</h1>
+        <form class="search-form">
+            <div class="form-group">
+                <label for="numero-facture">Numéro de Facture</label>
+                <input type="text" id="numero-facture" placeholder="Entrez le numéro de facture">
+            </div>
+            <div class="form-group">
+                <label for="fournisseur">Fournisseur</label>
+                <select id="fournisseur">
+                    <option value="">Sélectionnez un fournisseur</option>
+                    <option value="fournisseur1">Fournisseur 1</option>
+                    <option value="fournisseur2">Fournisseur 2</option>
+                    <option value="fournisseur3">Fournisseur 3</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="date-debut">Date de Début</label>
+                <input type="date" id="date-debut">
+            </div>
+            <div class="form-group">
+                <label for="date-fin">Date de Fin</label>
+                <input type="date" id="date-fin">
+            </div>
+            <div class="form-group">
+                <label for="statut">Statut</label>
+                <select id="statut">
+                    <option value="">Sélectionnez un statut</option>
+                    <option value="paye">Payé</option>
+                    <option value="impaye">Impayé</option>
+                    <option value="en-attente">En attente</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="montant-min">Montant Minimum</label>
+                <input type="number" id="montant-min" placeholder="Montant minimum">
+            </div>
+            <div class="form-group">
+                <label for="montant-max">Montant Maximum</label>
+                <input type="number" id="montant-max" placeholder="Montant maximum">
+            </div>
+            <div class="form-group">
+                <button type="submit">Rechercher</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

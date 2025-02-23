@@ -1,0 +1,62 @@
+flowchart TD
+    %% SECTION : ENTREE
+    subgraph ENTREE [Entree: Facturation et Transactions (4 pages, 2 formulaires)]
+        E1["Facturation Clients (2 pages, 1 formulaire, Table: Clients)"]
+        E2["Facturation Fournisseurs (1 page, 1 formulaire, Table: Fournisseurs, Lien vers Achats)"]
+        E3["Paiements et Encaissements (1 page, 1 formulaire)"]
+    end
+
+    %% SECTION : ACHATS (pour les fournisseurs)
+    subgraph ACHATS [Module Achats (3 pages, 2 formulaires, Table: Achats)]
+        A1["Liste Achats (Page Liste, Recherche avancée)"]
+        A2["Detail Achat (Page de detail, Recherche)"]
+    end
+
+    %% SECTION : COMPTABILITE
+    subgraph COMPTA [Module Comptabilite (7 pages, BD: 3 tables)]
+        C1["Ventes (3 pages, 2 formulaires, Table: Ventes)"]
+        C2["Salaires et Charges (2 pages, 1 formulaire, Table: Salaires)"]
+        C3["Stocks et Mouvements (2 pages, Table: Stocks)"]
+        C4["Grand Journal - Ecritures (1 page, Table: Ecritures)"]
+    end
+
+    %% SECTION : MIDDLEWARE/API
+    subgraph MIDDLEWARE [Middleware/API (Calcul indicateurs, Temps Reel)]
+        M["Analyse Temps Reel (Calcul & Agrégation)"]
+    end
+
+    %% SECTION : ALERTES
+    subgraph ALERTES [Module d'Alertes (Detection et Notification - 1 page)]
+        AL1["Comparaison avec Seuils (Seuils définis par utilisateur)"]
+        AL2["Declenchement Alerte (Validation & Notification interne)"]
+    end
+
+    %% SECTION : NOTIFICATIONS
+    subgraph NOTIF [Notifications (Envoi Email/SMS/Push - 1 page)]
+        N["Envoi Notifications"]
+    end
+
+    %% SECTION : ADMINISTRATION
+    subgraph ADMIN [Administration (2 pages)]
+        AD1["Gestion Utilisateurs (Interface dédiée)"]
+        AD2["Parametrage Comptabilite (Réglages de seuils)"]
+    end
+
+    %% FLUX ET INTERCONNEXIONS
+    E1 --> C1
+    E2 --> ACHATS
+    E3 --> C1
+    ACHATS --> C1
+    C1 --> C4
+    C2 --> C4
+    C3 --> C4
+    C4 --> M
+    M --> AL1
+    AL1 --> AL2
+    AL2 --> N
+    AD2 --- M
+    AD2 --- AL2
+    ADMIN --- COMPTA
+    ADMIN --- MIDDLEWARE
+    ADMIN --- ALERTES
+    M --- N

@@ -9,3 +9,108 @@ projet-bd-fournisseurs/
 │   ├── recherche_fournisseurs.html
 │── static/
 │   ├── styles.css
+
+
+
+
+
+projet_comptabilite/
+├── app.py
+├── requirements.txt
+├──
+├──
+├──
+│
+│
+├── static/
+│   ├── principal/
+│   │   ├── style_principal.css       # Styles généraux
+│   │   └── logo.png                 # Logo du site
+│   ├── fournisseurs/
+│   │   ├── style_fournisseurs.css   # Styles spécifiques aux fournisseurs (vert)
+│   │   └── icons/                  # Icônes pour le module fournisseurs
+│   └── rh_salaires/
+│       ├── style_rh.css            # Styles spécifiques RH (jaune)
+│       └── icons/                 # Icônes pour le module RH
+│
+├── templates/
+│   ├── principal/
+│   │   ├── menu_principal.html     # Page d'accueil
+│   │   └── menu_comptabilite.html  # Menu comptabilité général
+│   ├── fournisseurs/
+│   │   ├── comptabilite_fournisseurs.html
+│   │   ├── recherche_fournisseurs.html
+│   │   ├── recherche_factures_fournisseurs.html
+│   │   └── base_fournisseurs.html  # Template de base pour le module
+│   └── rh_salaires/
+│       ├── dashboard_rh.html       # Dashboard RH
+│       ├── liste_employes.html
+│       ├── fiche_employe.html
+│       └── base_rh.html           # Template de base pour le module RH
+│
+└── data/                          # Dossiers pour données (optionnel)
+    ├── fournisseurs_db/
+    └── rh_db/
+
+
+projet-bd-fournisseurs/
+│── app.py
+│── bd_fournisseurs_fictif.xlsx
+│── plan_comptable_crediter.xlsx
+│── plan_comptable_debiter.xlsx
+│── bd_tva.xlsx
+│── bd_delai_de_paiement.xlsx
+│── bd_factures_clients.xlsx
+│── bd_clients__fictif.xlsx
+│── requirements.txt
+│── templates/
+    	├── templates_fournisseurs 
+│   				├── recherche_fournisseurs.html
+
+
+│── static/
+│   ├── styles.css
+
+└── rh_salaires/
+│       ├── dashboard_rh.html       # Dashboard RH
+│       ├── liste_employes.html
+│       ├── fiche_employe.html
+│       └── base_rh.html 
+
+
+
+/branche fournisseurs
+│── app.py
+│── bd_fournisseurs_fictif.xlsx
+│── plan_comptable_crediter.xlsx
+│── plan_comptable_debiter.xlsx
+│── bd_tva.xlsx
+│── bd_delai_de_paiement.xlsx
+│── bd_factures_clients.xlsx
+│── bd_clients__fictif.xlsx
+│── requirements.txt
+│
+│
+│── /templates
+│   ├── index.html
+│   ├── menu_principal.html
+│   ├── menu_comptabilite.html
+│   ├── /templates_fournisseurs
+│   │   ├── comptabilite_fournisseurs.html
+│   │   ├── recherche_fournisseurs.html
+│   │   ├── recherche_factures_fournisseurs.html
+│   ├── /templates_clients
+│   │   ├── comptabilite_clients.html
+│   │   ├── recherche_clients.html
+│   │   ├── recherche_factures_clients.html
+│── /static
+│   ├── style_principal.css
+│   ├── style_fournisseurs.css
+│   ├── style_clients.css
+│
+│
+└── rh_salaires/
+│       ├── dashboard_rh.html       # Dashboard RH
+│       ├── liste_employes.html
+│       ├── fiche_employe.html
+│       └── base_rh.html 

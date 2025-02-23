@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu Salaires RH</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_rh.css') }}">
+    <style>
+        /* Mise en page */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .button-container a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Module Salaires RH</h1>
+    <div class="button-container">
+        <a href="{{ url_for('gestion_employes') }}" class="custom-button">
+            Gestion des Employés
+        </a>
+        
+        <a href="{{ url_for('traitement_salaires') }}" class="custom-button">
+            Traitement des Salaires
+        </a>
+    </div>
+</body>
+</html>

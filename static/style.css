@@ -66,3 +66,15 @@ input, select, textarea {
   padding: 8px;
   box-sizing: border-box;
 }
+
+
+
+
+
+
+<div class="buttons-container">
+        <button>factures fournisseurs + Notes de crédit</button>
+        <button>Liste des fournisseurs</button>
+        <button>Paiements en attente</button>
+        <button>Factures fournisseurs mémorisées</button>
+    </div>
